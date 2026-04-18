@@ -141,7 +141,7 @@ git add .
 git commit -m "feat: initial commit - complete ML pipeline with XAI and Streamlit dashboard"
 
 # 3. Link to GitHub:
-git remote add origin https://github.com/YOUR_USERNAME/Employee-Performance-Predictor.git
+git remote add origin https://github.com/tufan2416/Employee-Performance-Predictor.git
 git branch -M main
 git push -u origin main
 

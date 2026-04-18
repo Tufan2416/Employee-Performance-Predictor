@@ -13,7 +13,11 @@
    • Fairness audit view
 =============================================================
 """
+import json
 
+# Load feature names used during training
+with open("models/feature_names.json", "r") as f:
+    feature_names = json.load(f)
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -322,7 +326,16 @@ elif page == "📂 Batch Prediction":
 
                 avail     = [c for c in FEATURE_COLS if c in df.columns]
                 X         = df[avail].fillna(0).values
-                X_scaled  = scaler.transform(X) if scaler else X
+                # Ensure correct feature shape using training feature names
+                if scaler:
+                    X = pd.DataFrame(X, columns=feature_names[:len(X[0])])
+                    for col in feature_names:
+                        if col not in X.columns:
+                            X[col] = 0
+                    X = X[feature_names]  # reorder columns
+                    X_scaled = scaler.transform(X)
+                else:
+                    X_scaled = X
 
                 preds     = model.predict(X_scaled)
                 probas    = model.predict_proba(X_scaled)
@@ -330,14 +343,29 @@ elif page == "📂 Batch Prediction":
                 df["Confidence_%"]   = (probas.max(axis=1) * 100).round(1)
 
                 hr_recs = batch_decisions(df, preds, probas)
-                result  = df.merge(hr_recs[["Employee ID","Training Needed","Promotion Ready",
-                                             "PIP Required","Retention Risk","Priority"]],
-                                    left_on="employee_id", right_on="Employee ID", how="left")
+                # Ensure both dataframes have same key column
 
-            st.success("✅ Predictions complete!")
-            st.dataframe(result[["employee_id","department","Predicted_Band",
-                                  "Confidence_%","Retention Risk","Priority"]].head(20))
+                # Fix hr_recs column
+                hr_recs = hr_recs.rename(columns={"Employee ID": "employee_id"})
 
+                # Fix df column (handle different possible names)
+                if "employee_id" not in df.columns:
+                    if "Employee ID" in df.columns:
+                        df = df.rename(columns={"Employee ID": "employee_id"})
+                    elif "id" in df.columns:
+                        df = df.rename(columns={"id": "employee_id"})
+                    else:
+                        # fallback: create dummy id to avoid crash
+                        df["employee_id"] = range(len(df))
+
+                # Merge safely
+                df["employee_id"] = df["employee_id"].astype(str)
+                hr_recs["employee_id"] = hr_recs["employee_id"].astype(str)
+                result = df.merge(
+                    hr_recs[["employee_id", "Training Needed", "Promotion Ready"]],
+                    on="employee_id",
+                    how="left"
+                )
             csv = result.to_csv(index=False)
             st.download_button(
                 label    = "⬇️  Download Full Results CSV",
