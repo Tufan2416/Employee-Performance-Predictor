@@ -294,4 +294,4 @@ MIT License — free to use for learning and portfolio purposes.
 
 ---
 
-*Built by [Tufan Chowdhury] | Data Science Enthusiast | [LinkedIn]((https://www.linkedin.com/in/tufan-chowdhury06/)) | [GitHub](https://github.com)*
+*Built by [Tufan Chowdhury] | Data Science Enthusiast | [LinkedIn](https://www.linkedin.com/in/tufan-chowdhury06/) | [GitHub](https://github.com)*
