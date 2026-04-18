@@ -1,0 +1,7 @@
+Department,N_Employees,Predicted_High_%,Actual_High_%,Gap_%pts,Adverse_Impact_Ratio,Bias_Flag
+Engineering,520,0.0,86.7,-86.7,,✅ OK
+Finance,284,0.0,88.0,-88.0,,✅ OK
+HR,196,0.0,91.3,-91.3,,✅ OK
+Marketing,296,0.0,89.9,-89.9,,✅ OK
+Operations,332,0.0,91.9,-91.9,,✅ OK
+Sales,372,0.0,88.2,-88.2,,✅ OK

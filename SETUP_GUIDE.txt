@@ -1,0 +1,176 @@
+# ============================================================
+#  SETUP_GUIDE.md — Step-by-Step Instructions
+# ============================================================
+
+# EMPLOYEE PERFORMANCE PREDICTOR — COMPLETE SETUP GUIDE
+# ======================================================
+# Follow these steps exactly to get the project running.
+
+# ─────────────────────────────────────────────────────────────
+# STEP 1: INSTALL PYTHON (if not already installed)
+# ─────────────────────────────────────────────────────────────
+# Download Python 3.9+ from: https://www.python.org/downloads/
+# During installation CHECK "Add Python to PATH"
+
+# Verify installation:
+#   Windows:  python --version
+#   Mac/Linux: python3 --version
+# Expected output: Python 3.9.x (or higher)
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 2: OPEN PROJECT IN VS CODE
+# ─────────────────────────────────────────────────────────────
+# 1. Extract the ZIP file
+# 2. Open VS Code
+# 3. File → Open Folder → Select "Employee-Performance-Predictor"
+# 4. Open the integrated terminal: View → Terminal  (or Ctrl + `)
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 3: CREATE VIRTUAL ENVIRONMENT
+# ─────────────────────────────────────────────────────────────
+
+# Windows:
+python -m venv venv
+venv\Scripts\activate
+
+# Mac / Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+# You should see (venv) at the start of your terminal prompt.
+# This means the virtual environment is active. ✅
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 4: INSTALL ALL DEPENDENCIES
+# ─────────────────────────────────────────────────────────────
+pip install -r requirements.txt
+
+# This installs: numpy, pandas, scikit-learn, xgboost,
+#                shap, matplotlib, seaborn, streamlit, joblib
+#
+# Expected time: 2–5 minutes depending on internet speed.
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 5: RUN THE FULL ML PIPELINE
+# ─────────────────────────────────────────────────────────────
+python main.py
+
+# What happens:
+#   ✅ Generates 500-employee dataset (6,000+ records)
+#   ✅ Runs preprocessing + time-based split
+#   ✅ Trains Logistic Regression, Random Forest, XGBoost
+#   ✅ Generates 11 visualization charts in outputs/graphs/
+#   ✅ Runs HR Decision Engine on all test employees
+#   ✅ Performs fairness audit across departments
+#   ✅ Prints a real-world case study
+#
+# Expected time: 2–4 minutes
+# Expected output: outputs/graphs/*.png, models/*.pkl, outputs/*.csv
+
+
+# OPTIONAL: Generate more data (1000 employees):
+python main.py --employees 1000
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 6: LAUNCH THE STREAMLIT DASHBOARD
+# ─────────────────────────────────────────────────────────────
+streamlit run dashboard/app.py
+
+# This opens a browser at http://localhost:8501
+# You can:
+#   → Single Prediction: Input one employee's data and get prediction
+#   → Batch Prediction:  Upload a CSV for bulk predictions
+#   → Business Insights: View all EDA and model charts
+#   → Fairness Audit:    View bias analysis results
+
+
+# ─────────────────────────────────────────────────────────────
+# STEP 7: OPEN THE EDA NOTEBOOK (Optional)
+# ─────────────────────────────────────────────────────────────
+# In VS Code: Open notebooks/01_EDA.ipynb
+# Make sure the Python (venv) kernel is selected
+# Run all cells: Cell → Run All
+
+
+# ─────────────────────────────────────────────────────────────
+# COMMON ERRORS & FIXES
+# ─────────────────────────────────────────────────────────────
+
+# ERROR: ModuleNotFoundError: No module named 'xgboost'
+# FIX:   pip install xgboost
+
+# ERROR: ModuleNotFoundError: No module named 'shap'
+# FIX:   pip install shap
+# NOTE:  SHAP is optional. The project runs fine without it.
+
+# ERROR: streamlit: command not found
+# FIX:   pip install streamlit
+#        Then: python -m streamlit run dashboard/app.py
+
+# ERROR: No trained model found (in dashboard)
+# FIX:   Run python main.py first to train the models
+
+# ERROR: Permission denied (Windows)
+# FIX:   Run VS Code as Administrator, or use:
+#        python -m pip install -r requirements.txt
+
+# ERROR: venv\Scripts\activate is not recognized (Windows)
+# FIX:   Run in PowerShell:
+#        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+#        Then retry: venv\Scripts\activate
+
+
+# ─────────────────────────────────────────────────────────────
+# GITHUB UPLOAD STEPS
+# ─────────────────────────────────────────────────────────────
+
+# 1. Create a new repo on GitHub:
+#    Name:        Employee-Performance-Predictor
+#    Description: Industry-grade HR analytics system using ML + XAI + Streamlit
+#    Visibility:  Public
+#    DO NOT initialize with README (we have one)
+
+# 2. Initialize git in project folder:
+git init
+git add .
+git commit -m "feat: initial commit - complete ML pipeline with XAI and Streamlit dashboard"
+
+# 3. Link to GitHub:
+git remote add origin https://github.com/YOUR_USERNAME/Employee-Performance-Predictor.git
+git branch -M main
+git push -u origin main
+
+# 4. Recommended commit sequence (for proof-building):
+#    Day 1:  git commit -m "chore: project setup and folder structure"
+#    Day 2:  git commit -m "feat: synthetic HR data generator with employee lifecycle"
+#    Day 3:  git commit -m "feat: EDA visualizations and correlation analysis"
+#    Day 4:  git commit -m "feat: time-based ML pipeline with 3 model comparison"
+#    Day 5:  git commit -m "feat: SHAP explainability and HR decision engine"
+#    Day 6:  git commit -m "feat: fairness audit and bias detection"
+#    Day 7:  git commit -m "feat: Streamlit dashboard with single/batch prediction"
+
+# 5. Recommended GitHub tags (Topics):
+#    machine-learning, hr-analytics, xai, streamlit, python,
+#    sklearn, xgboost, shap, data-science, portfolio-project
+
+# ─────────────────────────────────────────────────────────────
+# PROJECT FILES OVERVIEW
+# ─────────────────────────────────────────────────────────────
+#
+# main.py                   → Run this first. Orchestrates everything.
+# src/data_generator.py     → Creates synthetic HR data (employee lifecycle)
+# src/preprocessing.py      → Cleaning, encoding, time-based split
+# src/model_training.py     → Trains LR, RF, XGBoost, compares them
+# src/explainability.py     → SHAP + permutation importance
+# src/hr_decision_engine.py → Rule-based HR recommendations
+# src/fairness_check.py     → Bias audit across departments
+# src/visualizations.py     → All 11 charts and graphs
+# dashboard/app.py          → Streamlit interactive UI
+# notebooks/01_EDA.ipynb    → Jupyter EDA notebook
+# requirements.txt          → pip dependencies
+# README.md                 → Professional GitHub README

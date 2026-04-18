@@ -1,0 +1,4 @@
+Experience_Tier,N_Employees,Predicted_High_%,Actual_High_%
+Junior (0–3 yrs),152,0.0,67.8
+Mid (4–8 yrs),272,0.0,75.7
+Senior (9+ yrs),1576,0.0,93.3
